@@ -1,0 +1,85 @@
+FORMAT: 1A
+HOST: http://polls.apiblueprint.org/
+
+# QwAPI
+
+QwAPI is the Qwestly.com API.
+
+## Quizzes Collection [/quizzes]
+
+### List All Quizzes [GET]
+
++ Response 200 (application/json)
+
+        {
+            "id": 234,
+            "published_at": "2015-08-05T08:40:51.620Z",
+            "begin_at": "2015-08-05T08:40:51.620Z",
+            "end_at": "2015-08-05T08:40:51.620Z",
+            "duration_minutes": "15",
+            "questions":
+            [
+                {
+                    "question": "Qui a tué Kennedy ?",
+                    "choices": [
+                        {
+                            "choice": "Super Mario",
+                            "votes": 2048
+                        }, {
+                            "choice": "Inspecteur gadget",
+                            "votes": 1024
+                        }, {
+                            "choice": "Personne, il a trébuché dans l'escalier",
+                            "votes": 512
+                        }, {
+                            "choice": "On ne sait toujours pas",
+                            "votes": 256
+                        }
+                    ]
+                }
+            ]
+        }
+
+### Create a New Quiz [POST]
+
+Create a new quiz with all informations about it.
+
++ Request (application/json)
+
+        {
+            "question": "Favourite programming language?",
+            "choices": [
+                "Swift",
+                "Python",
+                "Objective-C",
+                "Ruby"
+            ]
+        }
+
++ Response 201 (application/json)
+
+    + Headers
+
+            Location: /questions/2
+
+    + Body
+
+            {
+                "question": "Favourite programming language?",
+                "published_at": "2015-08-05T08:40:51.620Z",
+                "choices": [
+                    {
+                        "choice": "Swift",
+                        "votes": 0
+                    }, {
+                        "choice": "Python",
+                        "votes": 0
+                    }, {
+                        "choice": "Objective-C",
+                        "votes": 0
+                    }, {
+                        "choice": "Ruby",
+                        "votes": 0
+                    }
+                ]
+            }

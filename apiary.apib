@@ -1,44 +1,100 @@
 FORMAT: 1A
-HOST: http://polls.apiblueprint.org/
+HOST: http://qwapi.apiblueprint.org/
 
 # QwAPI
 
-QwAPI is the Qwestly.com API.
+QwAPI is the Qwestly.com service API
 
-## Quizzes Collection [/quizzes]
+## Group Quiz
 
-### List All Quizzes [GET]
+Resources related to quizzes in the API.
+
+## Quizz [/quizzes/{quiz_id}]
+
+A Quiz object has the following attributes:
+
++ question
++ published_at - An ISO8601 date when the question was published.
++ url
++ choices - An array of Choice objects.
+
++ Parameters
+    + question_id: 1 (required, number) - ID of the Question in form of an integer
+
+### View a Questions Detail [GET]
 
 + Response 200 (application/json)
 
         {
-            "id": 234,
-            "published_at": "2015-08-05T08:40:51.620Z",
-            "begin_at": "2015-08-05T08:40:51.620Z",
-            "end_at": "2015-08-05T08:40:51.620Z",
-            "duration_minutes": "15",
-            "questions":
-            [
+            "question": "Favourite programming language?",
+            "published_at": "2014-11-11T08:40:51.620Z",
+            "url": "/questions/1",
+            "choices": [
                 {
-                    "question": "Qui a tué Kennedy ?",
-                    "choices": [
-                        {
-                            "choice": "Super Mario",
-                            "votes": 2048
-                        }, {
-                            "choice": "Inspecteur gadget",
-                            "votes": 1024
-                        }, {
-                            "choice": "Personne, il a trébuché dans l'escalier",
-                            "votes": 512
-                        }, {
-                            "choice": "On ne sait toujours pas",
-                            "votes": 256
-                        }
-                    ]
+                    "choice": "Swift",
+                    "url": "/questions/1/choices/1",
+                    "votes": 2048
+                }, {
+                    "choice": "Python",
+                    "url": "/questions/1/choices/2",
+                    "votes": 1024
+                }, {
+                    "choice": "Objective-C",
+                    "url": "/questions/1/choices/3",
+                    "votes": 512
+                }, {
+                    "choice": "Ruby",
+                    "url": "/questions/1/choices/4",
+                    "votes": 256
                 }
             ]
         }
+
+## Quizzes Collection [/quizzes{?range}]
+
++ Parameters
+
+    + user_id : 123 (required, number) - The id of quiz owner
+    + range: 1 (required, number) - The page of questions to return
+
+### List All Quizzes [GET]
+        
++ Response 200 (application/json)
+
+    + Headers
+    
+            Link: </quizzes?range=0-9>; rel="next"
+        
+    + Body
+        [
+            {
+                "id": 234,
+                "published_at": "2015-08-05T08:40:51.620Z",
+                "begin_at": "2015-08-05T08:40:51.620Z",
+                "end_at": "2015-08-05T08:40:51.620Z",
+                "duration_minutes": "15",
+                "questions":
+                [
+                    {
+                        "question": "Qui a tué Kennedy ?",
+                        "choices": [
+                            {
+                                "choice": "Super Mario",
+                            }, {
+                                "choice": "Inspecteur gadget",
+                            }, {
+                                "choice": "Personne, il a trébuché dans l'escalier",
+                                "votes": 512
+                            }, {
+                                "choice": "On ne sait toujours pas",
+                                "votes": 256
+                            }
+                        ]
+                    }
+                ]
+            },
+               
+        ]
 
 ### Create a New Quiz [POST]
 
